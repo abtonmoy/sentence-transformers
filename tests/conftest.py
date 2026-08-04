@@ -19,8 +19,6 @@ if is_datasets_available():
 
 
 def _fake_model_info(model_id: str) -> SimpleNamespace:
-    # Raise for local paths just like the real call, so only valid repo IDs get a base model.
-    # The format check rejects absolute paths, the existence check rejects relative ones like "outputs/model".
     validate_repo_id(model_id)
     if os.path.exists(model_id):
         raise ValueError(f"{model_id!r} is a local path, not a Hub model ID")
@@ -29,6 +27,8 @@ def _fake_model_info(model_id: str) -> SimpleNamespace:
 
 def _fake_dataset_info(dataset_id: str) -> SimpleNamespace:
     validate_repo_id(dataset_id)
+    if os.path.exists(dataset_id):
+        raise ValueError(f"{dataset_id!r} is a local path, not a Hub dataset ID")
     return SimpleNamespace(id=dataset_id, cardData=None)
 
 
