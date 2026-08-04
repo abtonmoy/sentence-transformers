@@ -4,7 +4,7 @@ import math
 import random
 import warnings
 from collections.abc import Callable, Iterable
-from typing import Any
+from typing import Any, Literal
 
 import torch
 from torch import Tensor, nn
@@ -90,7 +90,7 @@ class AdaptiveLayerLoss(nn.Module):
         prior_layers_weight: float = 1.0,
         kl_div_weight: float = 1.0,
         kl_temperature: float = 0.3,
-        layer_weighting: str | Callable[[int], float] = "uniform",
+        layer_weighting: Literal["uniform", "log", "linear"] | Callable[[int], float] = "uniform",
     ) -> None:
         """
         The AdaptiveLayerLoss can be seen as a loss *modifier* that allows you to use other loss functions at non-final
